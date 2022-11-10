@@ -72,3 +72,19 @@ class FirstMinBPDecoder():
             new_synd = (self.h@(new_correction) % 2 + current_synd)%2
             
         return correction
+
+
+class BPDecoder():
+    def __init__(self, h:np.ndarray, channel_probs:np.ndarray, max_iter:int, bp_method:str, 
+                ms_scaling_factor:float):
+        self.decoder = bp_decoder(parity_check_matrix=h,
+                                 channel_probs=channel_probs,
+                                  max_iter=max_iter,
+                                  bp_method=bp_method,
+                                  ms_scaling_factor=ms_scaling_factor,)
+        self.h = h
+        self.max_iter = max_iter
+    
+    def decode(self, synd:np.ndarray):
+        correction = self.decoder.decode(synd)         
+        return correction
